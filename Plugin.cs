@@ -4,7 +4,7 @@ using BepInEx.Logging;
 
 namespace ftomove
 {
-    [BepInPlugin("com.alimoncul.ftomove", "ftomove", "1.0.1")]
+    [BepInPlugin("com.alimoncul.ftomove", "ftomove", "1.0.2")]
     public class Plugin : BaseUnityPlugin
     {
         internal static new ManualLogSource Logger;
