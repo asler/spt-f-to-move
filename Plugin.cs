@@ -1,6 +1,9 @@
 ﻿using BepInEx;
-using UnityEngine;
 using BepInEx.Logging;
+using EFT;
+using SPT.Reflection.Patching;
+using System.Reflection;
+using UnityEngine;
 
 namespace ftomove
 {
@@ -8,17 +11,24 @@ namespace ftomove
     public class Plugin : BaseUnityPlugin
     {
         internal static new ManualLogSource Logger;
+        internal GameObject moverObject;
 
         protected void Awake()
         {
+            new NewGamePatch().Enable();
             Logger = base.Logger;
             Logger.LogInfo("com.alimoncul.ftomove loaded");
 
-            var moverObject = new GameObject("Mover");
-            var mover = moverObject.AddComponent<Mover>();
+        }
+    }
+    internal class NewGamePatch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod() => typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
 
-            mover.Initialize(Logger);
-            DontDestroyOnLoad(moverObject);
+        [PatchPrefix]
+        public static void PatchPrefix()
+        {
+            Mover.Enable();
         }
     }
 }

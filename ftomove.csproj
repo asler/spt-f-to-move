@@ -39,9 +39,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>J:\SPT 4.0\BepInEx\DumpedAssemblies\EscapeFromTarkov\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PhysicsModule">
-      <HintPath>..\..\EscapeFromTarkov_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
     <Reference Include="0Harmony">
       <HintPath>J:\SPT 4.0\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>

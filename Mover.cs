@@ -11,17 +11,27 @@ namespace ftomove
 {
     public class Mover : MonoBehaviour
     {
-        private ManualLogSource _logger; 
+        private ManualLogSource _logger;
+        private static GameWorld gameWorld;
 
-        public void Initialize(ManualLogSource logger)
+        public Mover()
         {
-            _logger = logger;
+            if (_logger == null)
+            {
+                _logger = BepInEx.Logging.Logger.CreateLogSource(nameof(Mover));
+            }
         }
 
-        protected void Start()
+        public static void Enable()
         {
-            _logger?.LogInfo("com.alimoncul.ftomove: Mover Start called!");
+            if (Singleton<IBotGame>.Instantiated)
+            {
+                gameWorld = Singleton<GameWorld>.Instance;
+                var mover = gameWorld.GetOrAddComponent<Mover>();
+                mover._logger.LogInfo("Enabled");
+            }
         }
+
         public static bool InRaid()
         {
             var instance = Singleton<AbstractGame>.Instance;
@@ -33,7 +43,7 @@ namespace ftomove
             return ItemUiContext.Instance.ContextType == EItemUiContextType.InventoryScreen;
         }
 
-        protected void Update()
+        public void Update()
         {
             if (Input.GetKeyDown(KeyCode.F) && InRaid() && InInventoryScreen())
             {
